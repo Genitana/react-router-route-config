@@ -8,7 +8,7 @@
 */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './example';
+import App from './routeConfigExample';
 
 ReactDOM.render(
 <App />,

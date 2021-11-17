@@ -12,6 +12,11 @@ import { renderRoutes } from "react-router-config"
 // with `path` and `component` props, ordered the same
 // way you'd do inside a `<Switch>`.
 const routes = [
+  // {
+  //   // 没有path，且还放在最前面，它会匹配中任何路由
+  //   exact: true,
+  //   component: Empty,
+  // },
   {
     path: "/sandwiches",
     component: Sandwiches
@@ -100,11 +105,14 @@ export default function RouteConfigExample() {
         </ul>
 
         {/* 渲染第一级路由 */}
-        <Switch>
+        {/* <Switch>
           {routes.map((route, i) => (
             <RouteWithSubRoutes key={i} {...route} />
           ))}
-        </Switch>
+        </Switch> */}
+
+        {/* 直接用 renderRoutes更方便*/}
+        {renderRoutes(routes)}
       </div>
     </Router>
   );
@@ -120,7 +128,7 @@ function RouteWithSubRoutes(route) {
       render={(props) => (
         // pass the sub-routes down to keep nesting
         // route.routes 就是子路由
-        <route.component {...props} routes={route.routes} />
+        <route.component {...props} route={route} />
       )}
     />
   );
@@ -130,9 +138,13 @@ function Sandwiches() {
   return <h2>Sandwiches</h2>;
 }
 
-function Tacos({ routes }) {
+function Tacos({ route }) {
   // routes是传下来的子路由，这里就是 /tacos 下面的routes
+
+  const {routes} = route
   console.log('Tacos({ routes })', routes);
+
+  
   return (
     <div>
       <h2>Tacos</h2>
@@ -162,12 +174,12 @@ function Cart() {
   return <h3>Cart</h3>;
 }
 
-function Test_( routesss ) {
+function Test_( {route} ) {
   //TODO: 注意，要解构一下
-  console.log('Test_(routes)', routesss);
+  console.log('Test_(routes)', route);
   
   // routes是它的子路由
- const { routes } = routesss;
+ const { routes } = route;
  
   return (
       <div>
@@ -181,9 +193,11 @@ function Test_( routesss ) {
         
       </div>)
 }
-function Test({routes}) {
+function Test({route}) {
   // 注意：要解构一下
+  console.log('Test(route)', route);
 
+  const {routes} = route;
   console.log('Test({routes})', routes);
   return (
     <div>
@@ -202,4 +216,7 @@ function Test1() {
 }
 function Root() {
   return <h3>Root</h3>;
+}
+function Empty() {
+  return <h3>Empty</h3>;
 }
