@@ -1,5 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { renderRoutes } from "react-router-config"
+
+//TODO: renderRoutes 试试这个
 
 // Some folks find value in a centralized route config.
 // A route config is just data. React is great at mapping
